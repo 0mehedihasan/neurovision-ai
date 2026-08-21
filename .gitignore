@@ -60,3 +60,5 @@ build/
 # Generated OS files
 Thumbs.db
 EOF
+!backend/models/
+!backend/models/neurovision_efficientnet_b0.pth

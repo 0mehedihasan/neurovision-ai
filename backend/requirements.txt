@@ -6,3 +6,5 @@ torchvision
 pillow
 numpy
 pydantic
+scipy
+h5py
