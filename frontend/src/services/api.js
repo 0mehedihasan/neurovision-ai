@@ -1,0 +1,75 @@
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+
+async function parseResponse(response) {
+  let data = null;
+
+  try {
+    data = await response.json();
+  } catch {
+    data = null;
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      data?.detail ||
+        `Request failed with status ${response.status}.`
+    );
+  }
+
+  return data;
+}
+
+export async function predictMRI(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch(
+    `${API_BASE_URL}/predict`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+
+  return parseResponse(response);
+}
+
+export async function explainMRI(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch(
+    `${API_BASE_URL}/explain`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+
+  const data = await parseResponse(response);
+
+  if (data.gradcam_url) {
+    data.gradcam_url = `${API_BASE_URL}${data.gradcam_url}`;
+  }
+
+  return data;
+}
+
+export async function getHealth() {
+  const response = await fetch(
+    `${API_BASE_URL}/health`
+  );
+
+  return parseResponse(response);
+}
+
+export async function getModelInfo() {
+  const response = await fetch(
+    `${API_BASE_URL}/model-info`
+  );
+
+  return parseResponse(response);
+}
+
+export { API_BASE_URL };
