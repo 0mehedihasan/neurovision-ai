@@ -1,0 +1,2 @@
+timestamp,model,total_parameters,trainable_parameters,image_size,batch_size,num_classes,learning_rate,weight_decay,epochs,patience,gpu
+2026-08-21T17:56:03.224052,EfficientNet-B0,4011391,4011391,224,16,3,0.0001,0.0001,50,7,Tesla T4

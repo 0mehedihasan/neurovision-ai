@@ -1,0 +1,6 @@
+torch
+torchvision
+numpy
+Pillow
+gradio
+huggingface_hub

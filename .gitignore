@@ -1,0 +1,62 @@
+cat > .gitignore <<'EOF'
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Frontend builds
+frontend/dist/
+frontend/build/
+frontend/.next/
+frontend/.vite/
+
+# Runtime uploads
+backend/uploads/
+backend/results/
+backend/tmp/
+
+# Logs
+*.log
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+
+# Large model files
+*.pt
+*.pth
+
+# Keep important deployment model through Git LFS if needed
+!Training/exports/neurovision_efficientnet_b0.pth
+
+# Generated OS files
+Thumbs.db
+EOF
