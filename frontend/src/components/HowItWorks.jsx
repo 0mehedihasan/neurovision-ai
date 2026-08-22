@@ -9,19 +9,19 @@ const steps = [
     number: "01",
     icon: Upload,
     title: "Upload",
-    text: "Choose your brain MRI file from your device.",
+    text: "Upload a supported MRI sample or try a provided demo sample.",
   },
   {
     number: "02",
     icon: Brain,
-    title: "Analyze",
-    text: "The trained AI model evaluates the uploaded scan.",
+    title: "Classify",
+    text: "EfficientNet-B0 analyzes the MRI and returns class probabilities.",
   },
   {
     number: "03",
     icon: ScanSearch,
-    title: "Understand",
-    text: "Review the classification and probability estimates. For Grad-CAM explainability, run the local version.",
+    title: "Explain",
+    text: "Grad-CAM visualizes the image regions contributing to the prediction.",
   },
 ];
 

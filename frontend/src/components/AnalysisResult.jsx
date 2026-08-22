@@ -88,6 +88,12 @@ function AnalysisResult({
         </div>
       </div>
 
+      <p className="probability-disclaimer">
+        Model probabilities represent the model&apos;s estimated
+        class distribution and should not be interpreted as
+        clinical certainty.
+      </p>
+
       {gradcam && (
         <GradCAMViewer
           data={gradcam}

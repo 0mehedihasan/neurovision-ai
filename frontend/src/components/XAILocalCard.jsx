@@ -25,16 +25,17 @@ function XAILocalCard() {
           </h2>
 
           <p>
-            The hosted NeuroVision AI demo provides brain
-            tumor classification only. Grad-CAM requires
-            additional gradient-based computation that is
-            not enabled in the current free hosted deployment.
+            The NeuroVision AI backend implements Grad-CAM
+            explainability, but the hosted demo above only
+            calls the classification endpoint. Grad-CAM
+            visualizations are not yet wired into this public
+            deployment's upload flow.
           </p>
 
           <p>
-            The complete local version includes the
-            explainability workflow, allowing you to generate
-            Grad-CAM visualizations directly on your machine.
+            To generate Grad-CAM visualizations today, run
+            the project locally, where the upload flow calls
+            the backend's explainability endpoint directly.
           </p>
 
           <div className="xai-local-actions">

@@ -1,6 +1,7 @@
 import {
   Database,
   ExternalLink,
+  FlaskConical,
   Github,
   Linkedin,
 } from "lucide-react";
@@ -21,6 +22,14 @@ const resources = [
       "Access the MRI dataset used for brain tumor detection and analysis.",
     label: "Kaggle Dataset",
     url: "https://www.kaggle.com/datasets/sudipde25/mri-dataset-for-detection-and-analysis/data",
+  },
+  {
+    icon: FlaskConical,
+    title: "Demo Samples",
+    description:
+      "Use the provided MRI samples to test NeuroVision AI.",
+    label: "Browse Demo Samples",
+    url: "https://github.com/0mehedihasan/neurovision-ai/tree/main/assets/demo",
   },
   {
     icon: Linkedin,

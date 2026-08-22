@@ -54,16 +54,43 @@ function Home() {
           </div>
 
           <h1>
-            Understand your{" "}
-            <span>brain MRI</span>{" "}
-            with AI.
+            Brain MRI classification{" "}
+            with <span>explainable AI</span>.
           </h1>
 
           <p className="hero-description">
-            Upload a brain MRI sample and NeuroVision AI
-            will classify the scan and provide probability
-            estimates for three brain tumor categories.
+            NeuroVision AI uses an EfficientNet-B0 classifier
+            to sort brain MRI scans into three tumor
+            categories, with probability-based predictions
+            and Grad-CAM explainability.
           </p>
+
+          <div className="hero-stats">
+            <div>
+              <strong>EfficientNet-B0</strong>
+              <span>Model</span>
+            </div>
+
+            <div>
+              <strong>3</strong>
+              <span>Tumor Classes</span>
+            </div>
+
+            <div>
+              <strong>3,064</strong>
+              <span>MRI Samples</span>
+            </div>
+
+            <div>
+              <strong>91.14%</strong>
+              <span>Test Accuracy</span>
+            </div>
+
+            <div>
+              <strong>95.51%</strong>
+              <span>Macro ROC AUC</span>
+            </div>
+          </div>
 
           <div className="hero-features">
             <div>
