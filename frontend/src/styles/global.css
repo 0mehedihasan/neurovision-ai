@@ -1315,3 +1315,599 @@ main {
     padding: 22px;
   }
 }
+
+/* =========================================================
+   NEUROVISION AI REDESIGN
+   Professional medical AI interface
+========================================================= */
+
+:root {
+  --nv-bg: #f7f9fc;
+  --nv-card: #ffffff;
+  --nv-border: #e4e8ef;
+  --nv-border-soft: #edf0f5;
+  --nv-text: #101828;
+  --nv-muted: #667085;
+  --nv-subtle: #98a2b3;
+  --nv-blue: #2563eb;
+  --nv-blue-dark: #1d4ed8;
+  --nv-blue-soft: #eff6ff;
+  --nv-green: #12b76a;
+  --nv-red: #f04438;
+  --nv-shadow: 0 10px 30px rgba(16, 24, 40, 0.055);
+  --nv-shadow-lg: 0 20px 50px rgba(16, 24, 40, 0.08);
+}
+
+/* ---------- Page ---------- */
+
+body {
+  background: var(--nv-bg);
+  color: var(--nv-text);
+}
+
+main {
+  padding-bottom: 80px;
+}
+
+.content-shell {
+  width: min(calc(100% - 40px), 1120px);
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid var(--nv-border-soft);
+}
+
+.header-inner {
+  width: min(calc(100% - 40px), 1120px);
+  margin: 0 auto;
+}
+
+.brand-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--nv-blue);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.18);
+}
+
+.brand strong {
+  font-size: 14px;
+}
+
+.brand small {
+  font-size: 10px;
+  color: var(--nv-subtle);
+}
+
+.github-button {
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 9px;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  padding: 78px 20px 64px;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(37, 99, 235, 0.075),
+      transparent 45%
+    );
+}
+
+.hero-badge {
+  min-height: 30px;
+  padding: 0 11px;
+  font-size: 10px;
+  letter-spacing: 0.01em;
+}
+
+.hero h1 {
+  max-width: 760px;
+  margin-top: 20px;
+  font-size: clamp(42px, 6vw, 66px);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+}
+
+.hero h1 span {
+  color: var(--nv-blue);
+}
+
+.hero-description {
+  max-width: 620px !important;
+  margin-top: 20px !important;
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+}
+
+.hero-features {
+  margin-top: 26px;
+  gap: 8px;
+}
+
+.hero-features > div {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--nv-border);
+  border-radius: 999px;
+  background: rgba(255,255,255,.88);
+  color: var(--nv-muted);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* ---------- Shared section headers ---------- */
+
+.upload-section,
+.results-section,
+.xai-local-section,
+.how-section {
+  margin-bottom: 72px;
+}
+
+.upload-section > h2,
+.results-section > h2,
+.how-section > h2 {
+  margin: 0 0 22px;
+  color: var(--nv-text);
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+.section-label {
+  margin-bottom: 8px;
+  color: var(--nv-blue);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .16em;
+}
+
+/* ---------- Upload ---------- */
+
+.upload-card {
+  position: relative;
+  width: 100%;
+  min-height: 350px;
+  padding: 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--nv-border);
+  border-radius: 24px;
+  background: var(--nv-card);
+  box-shadow: var(--nv-shadow);
+  cursor: pointer;
+  transition:
+    border-color .2s ease,
+    box-shadow .2s ease,
+    transform .2s ease;
+}
+
+.upload-card:hover {
+  border-color: #bfd4ff;
+  box-shadow: var(--nv-shadow-lg);
+}
+
+.upload-card.is-loading {
+  cursor: wait;
+}
+
+.upload-icon {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: var(--nv-blue-soft);
+  color: var(--nv-blue);
+}
+
+.upload-icon.file-selected {
+  background: #ecfdf3;
+  color: var(--nv-green);
+}
+
+.upload-content {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.upload-content h3 {
+  max-width: 620px;
+  margin: 0;
+  color: var(--nv-text);
+  font-size: 17px;
+  line-height: 1.4;
+  font-weight: 800;
+}
+
+.upload-content p {
+  margin: 7px 0 0;
+  color: var(--nv-muted);
+  font-size: 13px;
+}
+
+.upload-content span {
+  display: block;
+  margin-top: 10px;
+  color: var(--nv-subtle);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+
+.remove-file {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--nv-border);
+  border-radius: 9px;
+  background: white;
+  color: var(--nv-muted);
+}
+
+.remove-file:hover {
+  color: var(--nv-red);
+  border-color: #fecdca;
+  background: #fff8f7;
+}
+
+.analyze-button {
+  max-width: 100%;
+  min-height: 50px;
+  margin-top: 14px;
+  border-radius: 11px;
+  background: var(--nv-blue);
+  font-size: 12px;
+  letter-spacing: .01em;
+}
+
+.analyze-button:hover:not(:disabled) {
+  background: var(--nv-blue-dark);
+}
+
+/* ---------- Error ---------- */
+
+.error-message {
+  margin: -44px 0 72px;
+  padding: 15px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid #fecdca;
+  border-radius: 12px;
+  background: #fff8f7;
+  color: #b42318;
+  font-size: 12px;
+}
+
+/* ---------- Results ---------- */
+
+.results-section {
+  scroll-margin-top: 90px;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: .82fr 1.18fr;
+  gap: 18px;
+}
+
+.prediction-card,
+.probability-card {
+  min-height: 260px;
+  padding: 28px;
+  border: 1px solid var(--nv-border);
+  border-radius: 20px;
+  background: var(--nv-card);
+  box-shadow: var(--nv-shadow);
+}
+
+.result-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--nv-muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.result-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  color: var(--nv-blue);
+  background: var(--nv-blue-soft);
+}
+
+.prediction-class {
+  margin-top: 30px;
+  color: var(--nv-text);
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1;
+  font-weight: 850;
+  letter-spacing: -0.05em;
+}
+
+.confidence-row {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--nv-blue);
+}
+
+.confidence-row > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.confidence-label {
+  color: var(--nv-muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.confidence-row strong {
+  color: var(--nv-text);
+  font-size: 17px;
+}
+
+.confidence-bar {
+  width: 100%;
+  height: 7px;
+  margin-top: 17px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #edf1f7;
+}
+
+.confidence-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--nv-blue);
+}
+
+.probability-card .probability-list {
+  margin-top: 28px;
+  gap: 20px;
+}
+
+.probability-header {
+  color: var(--nv-text);
+  font-size: 12px;
+}
+
+.probability-header span:last-child {
+  color: var(--nv-muted);
+  font-weight: 800;
+}
+
+.probability-track {
+  height: 8px;
+  margin-top: 7px;
+  background: #edf1f7;
+}
+
+.probability-fill {
+  background: var(--nv-blue);
+}
+
+/* ---------- XAI ---------- */
+
+.xai-local-section {
+  margin-top: 10px;
+}
+
+.xai-local-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 22px;
+  padding: 30px;
+  border: 1px solid #d7e5ff;
+  border-radius: 22px;
+  background:
+    linear-gradient(
+      135deg,
+      #f8fbff 0%,
+      #ffffff 70%
+    );
+  box-shadow: var(--nv-shadow);
+}
+
+.xai-local-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  color: var(--nv-blue);
+  background: var(--nv-blue-soft);
+}
+
+.xai-local-content h2 {
+  margin: 0;
+  color: var(--nv-text);
+  font-size: 24px;
+  letter-spacing: -.035em;
+}
+
+.xai-local-content p {
+  max-width: 760px;
+  margin: 10px 0 0;
+  color: var(--nv-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.xai-local-actions {
+  margin-top: 20px;
+}
+
+.xai-primary-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 15px;
+  border-radius: 10px;
+  background: var(--nv-blue);
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  box-shadow: 0 7px 18px rgba(37,99,235,.16);
+}
+
+.xai-primary-link:hover {
+  background: var(--nv-blue-dark);
+}
+
+/* ---------- How it works ---------- */
+
+.how-section {
+  padding-top: 10px;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.step-card {
+  min-height: 190px;
+  padding: 24px;
+  border: 1px solid var(--nv-border);
+  border-radius: 18px;
+  background: white;
+  box-shadow: var(--shadow-xs);
+}
+
+.step-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.step-top > span {
+  color: var(--nv-subtle);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.step-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  color: var(--nv-blue);
+  background: var(--nv-blue-soft);
+}
+
+.step-card h3 {
+  margin: 23px 0 7px;
+  color: var(--nv-text);
+  font-size: 16px;
+}
+
+.step-card p {
+  margin: 0;
+  color: var(--nv-muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--nv-border);
+  background: white;
+}
+
+.footer-inner {
+  width: min(calc(100% - 40px), 1120px);
+  margin: 0 auto;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 800px) {
+  .content-shell {
+    width: min(calc(100% - 28px), 1120px);
+  }
+
+  .hero {
+    padding: 62px 16px 48px;
+  }
+
+  .hero h1 {
+    font-size: clamp(38px, 11vw, 56px);
+  }
+
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .xai-local-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .header-inner {
+    width: min(calc(100% - 24px), 1120px);
+  }
+
+  .brand small {
+    display: none;
+  }
+
+  .github-button {
+    min-height: 34px;
+    padding: 0 10px;
+  }
+
+  .upload-card {
+    min-height: 300px;
+    padding: 28px 18px;
+  }
+
+  .prediction-card,
+  .probability-card {
+    padding: 22px;
+  }
+
+  .xai-local-card {
+    padding: 22px;
+  }
+}

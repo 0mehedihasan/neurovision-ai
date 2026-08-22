@@ -83,30 +83,32 @@ function Home() {
           </div>
         </section>
 
-        <UploadCard
-          file={file}
-          onFileSelect={handleFileSelect}
-          onAnalyze={handleAnalyze}
-          loading={loading}
-        />
-
-        {error && (
-          <div className="error-message">
-            <strong>Analysis could not be completed.</strong>
-            <span>{error}</span>
-          </div>
-        )}
-
-        {result && (
-          <AnalysisResult
-            result={result}
-            gradcam={null}
+        <div className="content-shell">
+          <UploadCard
+            file={file}
+            onFileSelect={handleFileSelect}
+            onAnalyze={handleAnalyze}
+            loading={loading}
           />
-        )}
 
-        <XAILocalCard />
+          {error && (
+            <div className="error-message">
+              <strong>Analysis could not be completed.</strong>
+              <span>{error}</span>
+            </div>
+          )}
 
-        <HowItWorks />
+          {result && (
+            <AnalysisResult
+              result={result}
+              gradcam={null}
+            />
+          )}
+
+          <XAILocalCard />
+
+          <HowItWorks />
+        </div>
       </main>
 
       <Footer />
