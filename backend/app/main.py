@@ -1,5 +1,6 @@
 from pathlib import Path
 from uuid import uuid4
+from io import BytesIO
 
 from fastapi import (
     FastAPI,
@@ -8,7 +9,7 @@ from fastapi import (
     UploadFile,
 )
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 
 from app.config import (
     CLASS_NAMES,
@@ -297,6 +298,80 @@ async def predict(
             status_code=500,
             detail=(
                 f"Prediction failed: {exc}"
+            ),
+        ) from exc
+
+
+# =============================================================================
+# PREVIEW
+# =============================================================================
+
+@app.post(
+    "/preview",
+    tags=["Prediction"],
+)
+async def preview(
+    file: UploadFile = File(...),
+):
+    """
+    Return a PNG preview of an uploaded file.
+
+    Reuses the same load_image() used by /predict, so MAT v7.3
+    samples are decoded into a viewable grayscale PNG. Regular
+    image uploads (PNG/JPG/JPEG/WEBP) are previewed directly in
+    the browser instead of calling this endpoint.
+    """
+
+    extension = validate_upload(
+        file
+    )
+
+    try:
+
+        image_bytes = (
+            await file.read()
+        )
+
+        if not image_bytes:
+
+            raise HTTPException(
+                status_code=400,
+                detail="Uploaded file is empty.",
+            )
+
+        image = load_image(
+            image_bytes,
+            filename=file.filename,
+        )
+
+        buffer = BytesIO()
+
+        image.save(
+            buffer,
+            format="PNG",
+        )
+
+        return Response(
+            content=buffer.getvalue(),
+            media_type="image/png",
+        )
+
+    except HTTPException:
+        raise
+
+    except ValueError as exc:
+
+        raise HTTPException(
+            status_code=400,
+            detail=str(exc),
+        ) from exc
+
+    except Exception as exc:
+
+        raise HTTPException(
+            status_code=500,
+            detail=(
+                f"Preview generation failed: {exc}"
             ),
         ) from exc
 

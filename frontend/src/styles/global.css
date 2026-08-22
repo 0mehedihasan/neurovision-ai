@@ -1588,6 +1588,83 @@ main {
   color: var(--nv-green);
 }
 
+.mri-preview {
+  width: 100%;
+  max-width: 420px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  cursor: default;
+}
+
+.mri-preview-label {
+  color: var(--nv-subtle);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mri-preview-frame {
+  width: 100%;
+  height: 200px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border: 1px solid var(--nv-border);
+  border-radius: 14px;
+
+  background: var(--nv-bg);
+}
+
+.mri-preview-frame img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+.mri-preview-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 16px;
+
+  color: var(--nv-subtle);
+
+  text-align: center;
+}
+
+.mri-preview-fallback p {
+  margin: 0;
+  color: var(--nv-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.mri-preview-fallback span {
+  color: var(--nv-subtle);
+  font-size: 11px;
+}
+
+.mri-preview-error-detail {
+  max-width: 300px;
+
+  color: var(--nv-red) !important;
+  font-size: 10px !important;
+  line-height: 1.5;
+}
+
 .upload-content {
   margin-top: 18px;
   text-align: center;
@@ -1652,6 +1729,137 @@ main {
   background: var(--nv-blue-dark);
 }
 
+.button-spinner {
+  width: 15px;
+  height: 15px;
+
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+
+  animation: spin 0.7s linear infinite;
+}
+
+/* ---------- Demo samples ---------- */
+
+.demo-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin: 24px 0;
+
+  color: var(--nv-subtle);
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.demo-divider::before,
+.demo-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--nv-border);
+}
+
+.demo-samples {
+  padding: 22px;
+
+  border: 1px solid var(--nv-border-soft);
+  border-radius: 18px;
+
+  background: var(--nv-card);
+}
+
+.demo-header {
+  margin-bottom: 16px;
+}
+
+.demo-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: var(--nv-blue);
+}
+
+.demo-title-row strong {
+  color: var(--nv-text);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.demo-header p {
+  max-width: 560px;
+
+  margin: 6px 0 0;
+
+  color: var(--nv-muted);
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.demo-sample-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.demo-sample-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  min-height: 42px;
+  padding: 0 12px;
+
+  border: 1px solid var(--nv-border);
+  border-radius: 10px;
+
+  color: var(--nv-text);
+  background: var(--nv-bg);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.demo-sample-button:hover:not(:disabled) {
+  border-color: #bfd4ff;
+  background: var(--nv-blue-soft);
+  color: var(--nv-blue-dark);
+}
+
+.demo-sample-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.demo-spinner {
+  animation: spin 0.7s linear infinite;
+}
+
+.demo-note {
+  display: block;
+
+  margin-top: 14px;
+
+  color: var(--nv-subtle);
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
 /* ---------- Error ---------- */
 
 .error-message {
@@ -1665,6 +1873,17 @@ main {
   background: #fff8f7;
   color: #b42318;
   font-size: 12px;
+}
+
+.demo-error {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid #fecdca;
+  border-radius: 10px;
+  background: #fff8f7;
+  color: #b42318;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 /* ---------- Results ---------- */
@@ -1957,6 +2176,10 @@ main {
   .xai-local-card {
     grid-template-columns: 1fr;
   }
+
+  .demo-sample-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 520px) {
@@ -1976,6 +2199,19 @@ main {
   .upload-card {
     min-height: 300px;
     padding: 28px 18px;
+  }
+
+  .mri-preview-frame {
+    height: 160px;
+  }
+
+  .demo-samples {
+    padding: 18px;
+  }
+
+  .demo-sample-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .prediction-card,

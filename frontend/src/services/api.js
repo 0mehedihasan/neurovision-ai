@@ -32,6 +32,34 @@ export async function predictMRI(file) {
   return parseResponse(response);
 }
 
+export async function getPreview(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch(`${API_BASE_URL}/preview`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    let detail = "";
+
+    try {
+      const data = await response.json();
+      detail = data?.detail;
+    } catch {
+      detail = "";
+    }
+
+    throw new Error(
+      detail ||
+        `Request failed with status ${response.status}.`
+    );
+  }
+
+  return response.blob();
+}
+
 export async function getHealth() {
   const response = await fetch(`${API_BASE_URL}/health`);
 

@@ -646,6 +646,19 @@ npm run dev`}
                 API docs: http://127.0.0.1:8000/docs
               </span>
             </div>
+
+            <div className="documentation-callout">
+              <strong>Demo Samples</strong>
+              <span>
+                Six real MAT demo MRI files from the
+                repository's assets/demo/ folder are served
+                locally by the frontend at /demo/. The
+                "Try a demo sample" control on the homepage
+                loads one of these files directly and runs it
+                through the same upload-to-prediction pipeline
+                as a manually selected file.
+              </span>
+            </div>
           </section>
 
           <section
