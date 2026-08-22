@@ -1,9 +1,8 @@
 import { useCallback, useState } from "react";
-import { predictMRI, explainMRI } from "../services/api";
+import { predictMRI } from "../services/api";
 
 export function useAnalysis() {
   const [result, setResult] = useState(null);
-  const [gradcam, setGradcam] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -16,19 +15,11 @@ export function useAnalysis() {
     setLoading(true);
     setError("");
     setResult(null);
-    setGradcam(null);
 
     try {
       const prediction = await predictMRI(file);
 
       setResult(prediction);
-
-      try {
-        const explanation = await explainMRI(file);
-        setGradcam(explanation);
-      } catch (gradcamError) {
-        console.error("Grad-CAM generation failed:", gradcamError);
-      }
 
       return prediction;
     } catch (err) {
@@ -48,14 +39,12 @@ export function useAnalysis() {
 
   const reset = useCallback(() => {
     setResult(null);
-    setGradcam(null);
     setError("");
     setLoading(false);
   }, []);
 
   return {
     result,
-    gradcam,
     loading,
     error,
     analyze,

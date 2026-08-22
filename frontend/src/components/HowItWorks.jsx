@@ -21,7 +21,7 @@ const steps = [
     number: "03",
     icon: ScanSearch,
     title: "Understand",
-    text: "Review the classification and visual AI explanation.",
+    text: "Review the classification and probability estimates. For Grad-CAM explainability, run the local version.",
   },
 ];
 

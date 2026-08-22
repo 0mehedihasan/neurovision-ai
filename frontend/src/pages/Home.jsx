@@ -11,6 +11,7 @@ import UploadCard from "../components/UploadCard";
 import AnalysisResult from "../components/AnalysisResult";
 import HowItWorks from "../components/HowItWorks";
 import Footer from "../components/Footer";
+import XAILocalCard from "../components/XAILocalCard";
 
 import { useAnalysis } from "../hooks/useAnalysis";
 
@@ -19,7 +20,6 @@ function Home() {
 
   const {
     result,
-    gradcam,
     loading,
     error,
     analyze,
@@ -50,7 +50,7 @@ function Home() {
         <section className="hero">
           <div className="hero-badge">
             <Sparkles size={16} />
-            AI-assisted MRI analysis
+            AI-assisted MRI classification
           </div>
 
           <h1>
@@ -60,9 +60,9 @@ function Home() {
           </h1>
 
           <p className="hero-description">
-            Upload a brain MRI scan and NeuroVision AI
-            will classify the image and show you the
-            areas that influenced its prediction.
+            Upload a brain MRI sample and NeuroVision AI
+            will classify the scan and provide probability
+            estimates for three brain tumor categories.
           </p>
 
           <div className="hero-features">
@@ -78,7 +78,7 @@ function Home() {
 
             <div>
               <ScanSearch size={18} />
-              Visual explanation
+              Probability analysis
             </div>
           </div>
         </section>
@@ -100,9 +100,11 @@ function Home() {
         {result && (
           <AnalysisResult
             result={result}
-            gradcam={gradcam}
+            gradcam={null}
           />
         )}
+
+        <XAILocalCard />
 
         <HowItWorks />
       </main>
