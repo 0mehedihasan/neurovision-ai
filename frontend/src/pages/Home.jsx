@@ -10,6 +10,10 @@ import Header from "../components/Header";
 import UploadCard from "../components/UploadCard";
 import AnalysisResult from "../components/AnalysisResult";
 import HowItWorks from "../components/HowItWorks";
+import Methodology from "../components/Methodology";
+import ModelDevelopment from "../components/ModelDevelopment";
+import SystemArchitecture from "../components/SystemArchitecture";
+import ProjectResources from "../components/ProjectResources";
 import Footer from "../components/Footer";
 import XAILocalCard from "../components/XAILocalCard";
 
@@ -135,6 +139,14 @@ function Home() {
           <XAILocalCard />
 
           <HowItWorks />
+
+          <Methodology />
+
+          <ModelDevelopment />
+
+          <SystemArchitecture />
+
+          <ProjectResources />
         </div>
       </main>
 

@@ -3,6 +3,9 @@ import {
   BookOpen,
   Database,
   GitBranch,
+  Waves,
+  Users,
+  Scale,
   Cpu,
   FlaskConical,
   BarChart3,
@@ -10,72 +13,31 @@ import {
   Terminal,
   Code2,
   Cloud,
+  FolderGit2,
   AlertTriangle,
+  Link2,
   ChevronDown,
   ExternalLink,
 } from "lucide-react";
 
 const sections = [
-  {
-    id: "overview",
-    label: "Overview",
-    icon: BookOpen,
-  },
-  {
-    id: "dataset",
-    label: "Dataset",
-    icon: Database,
-  },
-  {
-    id: "methodology",
-    label: "Methodology",
-    icon: GitBranch,
-  },
-  {
-    id: "model",
-    label: "Model",
-    icon: Cpu,
-  },
-  {
-    id: "training",
-    label: "Training",
-    icon: FlaskConical,
-  },
-  {
-    id: "results",
-    label: "Results",
-    icon: BarChart3,
-  },
-  {
-    id: "xai",
-    label: "Explainable AI",
-    icon: ScanSearch,
-  },
-  {
-    id: "workflow",
-    label: "Workflow",
-    icon: GitBranch,
-  },
-  {
-    id: "installation",
-    label: "Local Installation",
-    icon: Terminal,
-  },
-  {
-    id: "api",
-    label: "API",
-    icon: Code2,
-  },
-  {
-    id: "deployment",
-    label: "Deployment",
-    icon: Cloud,
-  },
-  {
-    id: "limitations",
-    label: "Limitations",
-    icon: AlertTriangle,
-  },
+  { id: "overview", label: "Overview", icon: BookOpen },
+  { id: "dataset", label: "Dataset", icon: Database },
+  { id: "methodology", label: "Methodology", icon: GitBranch },
+  { id: "preprocessing", label: "Preprocessing", icon: Waves },
+  { id: "patient-split", label: "Patient-Level Splitting", icon: Users },
+  { id: "class-balancing", label: "Class Balancing", icon: Scale },
+  { id: "model", label: "Model Architecture", icon: Cpu },
+  { id: "training", label: "Training Configuration", icon: FlaskConical },
+  { id: "results", label: "Results", icon: BarChart3 },
+  { id: "xai", label: "Explainable AI", icon: ScanSearch },
+  { id: "workflow", label: "Project Workflow", icon: GitBranch },
+  { id: "installation", label: "Local Installation", icon: Terminal },
+  { id: "api", label: "API Reference", icon: Code2 },
+  { id: "deployment", label: "Deployment Architecture", icon: Cloud },
+  { id: "demo-samples", label: "Demo Samples", icon: FolderGit2 },
+  { id: "limitations", label: "Limitations", icon: AlertTriangle },
+  { id: "resources", label: "Project Resources", icon: Link2 },
 ];
 
 function Documentation() {
@@ -191,6 +153,7 @@ function Documentation() {
             )}
           </div>
 
+          {/* 01 — OVERVIEW */}
           <section
             id="overview"
             className="documentation-section documentation-hero"
@@ -235,6 +198,7 @@ function Documentation() {
             </div>
           </section>
 
+          {/* 02 — DATASET */}
           <section
             id="dataset"
             className="documentation-section"
@@ -288,6 +252,13 @@ function Documentation() {
 ├── PID
 ├── tumorMask
 └── tumorBorder`}</pre>
+
+              <p>
+                The MRI image is used for classification. The
+                tumor mask is not used as classifier input — it
+                is used independently for quantitative Grad-CAM
+                localization evaluation.
+              </p>
             </div>
 
             <div className="documentation-grid three">
@@ -309,8 +280,41 @@ function Documentation() {
                 text="Brain tumor category."
               />
             </div>
+
+            <div className="documentation-table-wrapper">
+              <table className="documentation-table">
+                <thead>
+                  <tr>
+                    <th>Partition</th>
+                    <th>Samples</th>
+                    <th>Patients</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>Training</td>
+                    <td>1,947</td>
+                    <td>148</td>
+                  </tr>
+
+                  <tr>
+                    <td>Validation</td>
+                    <td>474</td>
+                    <td>38</td>
+                  </tr>
+
+                  <tr>
+                    <td>Test</td>
+                    <td>643</td>
+                    <td>47</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </section>
 
+          {/* 03 — METHODOLOGY */}
           <section
             id="methodology"
             className="documentation-section"
@@ -327,125 +331,258 @@ function Documentation() {
                 ["02", "Manifest construction", "Image, class, patient and mask metadata"],
                 ["03", "Patient-level splitting", "Leakage-aware train, validation and test partitions"],
                 ["04", "Preprocessing", "Normalization, resizing and channel conversion"],
-                ["05", "Model training", "ImageNet-pretrained EfficientNet-B0"],
-                ["06", "Evaluation", "Classification and probability metrics"],
-                ["07", "Explainability", "Grad-CAM and tumor-mask localization"],
+                ["05", "Class balancing", "Weighted, label-smoothed training objective"],
+                ["06", "Model training", "ImageNet-pretrained EfficientNet-B0"],
+                ["07", "Evaluation", "Classification and probability metrics"],
+                ["08", "Explainability", "Grad-CAM and tumor-mask localization"],
+                ["09", "Deployment", "FastAPI backend + Vercel/Render hosting"],
               ]}
             />
           </section>
 
+          {/* 04 — PREPROCESSING */}
+          <section
+            id="preprocessing"
+            className="documentation-section"
+          >
+            <SectionHeading
+              number="03"
+              title="Preprocessing"
+              description="MRI intensity normalization and formatting applied before the model sees a sample."
+            />
+
+            <WorkflowSteps
+              steps={[
+                ["01", "Raw MRI", "Loaded from the MAT sample"],
+                ["02", "NaN / Inf handling", "Invalid values are cleaned"],
+                ["03", "Percentile normalization", "1st–99th percentile intensity normalization"],
+                ["04", "0–255 scaling", "Rescaled to standard image range"],
+                ["05", "Grayscale → RGB", "3-channel conversion"],
+                ["06", "224 × 224 resize", "Matches EfficientNet-B0 input size"],
+                ["07", "ImageNet normalization", "Mean [0.485, 0.456, 0.406] / Std [0.229, 0.224, 0.225]"],
+              ]}
+            />
+
+            <div className="documentation-grid two">
+              <InfoCard
+                title="Training"
+                value="Augmented"
+                text="Random horizontal flip, random rotation (±10°), and color jitter."
+              />
+
+              <InfoCard
+                title="Validation / Test"
+                value="Deterministic"
+                text="No augmentation — identical preprocessing every run."
+              />
+            </div>
+          </section>
+
+          {/* 05 — PATIENT-LEVEL SPLITTING */}
+          <section
+            id="patient-split"
+            className="documentation-section"
+          >
+            <SectionHeading
+              number="04"
+              title="Patient-Level Splitting"
+              description="MRI samples belonging to the same patient are constrained to a single data partition."
+            />
+
+            <div className="documentation-card">
+              <h3>Leakage prevention</h3>
+
+              <div className="disjoint-set-row">
+                <span>Train ∩ Validation = ∅</span>
+                <span>Train ∩ Test = ∅</span>
+                <span>Validation ∩ Test = ∅</span>
+              </div>
+
+              <p>
+                The pipeline verifies patient-set separation
+                between partitions before training begins. Five
+                predefined folds from <code>cvind.mat</code> are
+                used, with fold 5 held out as the test set and
+                the remaining folds used for training and
+                validation.
+              </p>
+            </div>
+
+            <div className="documentation-table-wrapper">
+              <table className="documentation-table">
+                <thead>
+                  <tr>
+                    <th>Partition</th>
+                    <th>Samples</th>
+                    <th>Patients</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>Training</td>
+                    <td>1,947</td>
+                    <td>148</td>
+                  </tr>
+
+                  <tr>
+                    <td>Validation</td>
+                    <td>474</td>
+                    <td>38</td>
+                  </tr>
+
+                  <tr>
+                    <td>Test</td>
+                    <td>643</td>
+                    <td>47</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          {/* 06 — CLASS BALANCING */}
+          <section
+            id="class-balancing"
+            className="documentation-section"
+          >
+            <SectionHeading
+              number="05"
+              title="Class Balancing"
+              description="Class imbalance is addressed with distribution-derived weights rather than resampling."
+            />
+
+            <div className="documentation-card">
+              <h3>Weighted, label-smoothed objective</h3>
+
+              <p>
+                Class weights are calculated from the training
+                distribution and combined with label smoothing
+                to reduce overconfident target assignments.
+              </p>
+
+              <pre>{`weight_c = N / (K × N_c)
+
+CrossEntropyLoss(
+  weight=class_weights,
+  label_smoothing=0.05
+)`}</pre>
+            </div>
+          </section>
+
+          {/* 07 — MODEL ARCHITECTURE */}
           <section
             id="model"
             className="documentation-section"
           >
             <SectionHeading
-              number="03"
-              title="Model"
+              number="06"
+              title="Model Architecture"
               description="The deployed classifier uses an ImageNet-pretrained EfficientNet-B0 backbone."
             />
 
             <div className="model-flow">
-              <ModelNode
-                title="MRI Input"
-                text="224 × 224 × 3"
-              />
-
+              <ModelNode title="MRI Input" text="224 × 224 × 3" />
               <span>→</span>
-
-              <ModelNode
-                title="EfficientNet-B0"
-                text="ImageNet pretrained"
-              />
-
+              <ModelNode title="EfficientNet-B0" text="ImageNet pretrained" />
               <span>→</span>
-
-              <ModelNode
-                title="Classifier"
-                text="3 output logits"
-              />
-
+              <ModelNode title="Feature Extraction" text="Backbone output" />
               <span>→</span>
-
-              <ModelNode
-                title="Prediction"
-                text="Softmax probabilities"
-              />
+              <ModelNode title="Classifier" text="3 output logits" />
+              <span>→</span>
+              <ModelNode title="Prediction" text="Softmax probabilities" />
             </div>
 
+            <p className="documentation-note">
+              The original EfficientNet-B0 classifier is replaced
+              with a three-output classification layer.
+            </p>
+
             <div className="documentation-grid three">
-              <InfoCard
-                title="Meningioma"
-                value="Class 1"
-                text="Output category."
-              />
+              <InfoCard title="Meningioma" value="Class 1" text="Output category." />
+              <InfoCard title="Glioma" value="Class 2" text="Output category." />
+              <InfoCard title="Pituitary" value="Class 3" text="Output category." />
+            </div>
 
-              <InfoCard
-                title="Glioma"
-                value="Class 2"
-                text="Output category."
-              />
-
-              <InfoCard
-                title="Pituitary"
-                value="Class 3"
-                text="Output category."
-              />
+            <div className="documentation-table-wrapper">
+              <table className="documentation-table">
+                <tbody>
+                  <TableRow label="Architecture" value="EfficientNet-B0" />
+                  <TableRow label="Parameters" value="4,011,391" />
+                  <TableRow label="Trainable parameters" value="4,011,391" />
+                  <TableRow label="Input size" value="224 × 224" />
+                  <TableRow label="Input channels" value="3" />
+                  <TableRow label="Source image" value="Grayscale MRI" />
+                  <TableRow label="Conversion" value="Grayscale → RGB" />
+                  <TableRow label="Output classes" value="3" />
+                </tbody>
+              </table>
             </div>
           </section>
 
+          {/* 08 — TRAINING CONFIGURATION */}
           <section
             id="training"
             className="documentation-section"
           >
             <SectionHeading
-              number="04"
-              title="Training"
-              description="Training configuration used by the model development pipeline."
+              number="07"
+              title="Training Configuration"
+              description="Configuration used by the final experiment, and how it actually trained."
             />
 
             <div className="documentation-table-wrapper">
               <table className="documentation-table">
                 <tbody>
                   <TableRow label="Architecture" value="EfficientNet-B0" />
-                  <TableRow label="Input size" value="224 × 224" />
                   <TableRow label="Batch size" value="16" />
                   <TableRow label="Maximum epochs" value="50" />
                   <TableRow label="Learning rate" value="1e-4" />
                   <TableRow label="Weight decay" value="1e-4" />
                   <TableRow label="Optimizer" value="AdamW" />
                   <TableRow label="Label smoothing" value="0.05" />
-                  <TableRow label="Early stopping" value="7 epochs" />
-                  <TableRow label="Scheduler" value="ReduceLROnPlateau" />
-                  <TableRow label="Seed" value="42" />
+                  <TableRow label="Gradient clipping" value="1.0" />
+                  <TableRow label="Early stopping patience" value="7 epochs" />
+                  <TableRow label="Selection metric" value="Validation Macro F1" />
+                  <TableRow label="Random seed" value="42" />
                 </tbody>
               </table>
             </div>
 
             <div className="documentation-callout">
-              <strong>Best checkpoint</strong>
+              <strong>Actual training behavior</strong>
               <span>
-                The training pipeline selected the checkpoint
-                according to validation Macro F1 rather than
-                training loss alone.
+                Configured for a maximum of 50 epochs, the model
+                was actually trained for 15 epochs before early
+                stopping triggered. The best checkpoint was saved
+                at epoch 8, with a validation Macro F1 of 0.9629,
+                and selected according to validation Macro F1
+                rather than final training loss.
               </span>
             </div>
           </section>
 
+          {/* 09 — RESULTS */}
           <section
             id="results"
             className="documentation-section"
           >
             <SectionHeading
-              number="05"
+              number="08"
               title="Results"
-              description="Final test-set performance reported by the training pipeline."
+              description="Final test-set performance reported by the training pipeline, on 643 held-out samples."
             />
 
             <div className="documentation-metric-grid">
               <Metric value="91.14%" label="Accuracy" />
+              <Metric value="90.95%" label="Balanced Accuracy" />
               <Metric value="90.27%" label="Macro F1" />
-              <Metric value="95.51%" label="Macro ROC AUC" />
+              <Metric value="91.16%" label="Weighted F1" />
               <Metric value="0.8662" label="MCC" />
+              <Metric value="0.8642" label="Cohen's Kappa" />
+              <Metric value="95.85%" label="Macro Specificity" />
+              <Metric value="95.51%" label="Macro ROC AUC" />
+              <Metric value="91.28%" label="Macro PR AUC" />
             </div>
 
             <div className="documentation-card">
@@ -459,29 +596,33 @@ function Documentation() {
                       <th>Precision</th>
                       <th>Recall</th>
                       <th>F1</th>
+                      <th>ROC AUC</th>
                     </tr>
                   </thead>
 
                   <tbody>
                     <tr>
                       <td>Meningioma</td>
-                      <td>83%</td>
-                      <td>83%</td>
-                      <td>83%</td>
+                      <td>83.13%</td>
+                      <td>83.13%</td>
+                      <td>83.13%</td>
+                      <td>0.9085</td>
                     </tr>
 
                     <tr>
                       <td>Glioma</td>
-                      <td>99%</td>
-                      <td>90%</td>
-                      <td>94%</td>
+                      <td>98.85%</td>
+                      <td>90.24%</td>
+                      <td>94.35%</td>
+                      <td>0.9843</td>
                     </tr>
 
                     <tr>
                       <td>Pituitary</td>
-                      <td>88%</td>
-                      <td>99%</td>
-                      <td>93%</td>
+                      <td>87.91%</td>
+                      <td>99.47%</td>
+                      <td>93.33%</td>
+                      <td>0.9725</td>
                     </tr>
                   </tbody>
                 </table>
@@ -489,42 +630,27 @@ function Documentation() {
             </div>
           </section>
 
+          {/* 10 — EXPLAINABLE AI */}
           <section
             id="xai"
             className="documentation-section"
           >
             <SectionHeading
-              number="06"
+              number="09"
               title="Explainable AI"
               description="Grad-CAM is used to visualize image regions contributing to the model prediction."
             />
 
             <div className="xai-flow">
-              <ModelNode
-                title="MRI"
-                text="Input sample"
-              />
-
+              <ModelNode title="MRI" text="Input sample" />
               <span>→</span>
-
-              <ModelNode
-                title="EfficientNet-B0"
-                text="Classification"
-              />
-
+              <ModelNode title="EfficientNet-B0" text="Classification" />
               <span>→</span>
-
-              <ModelNode
-                title="Grad-CAM"
-                text="Gradient-based localization"
-              />
-
+              <ModelNode title="Target Layer" text="model.features[-1]" />
               <span>→</span>
-
-              <ModelNode
-                title="Tumor mask"
-                text="Localization comparison"
-              />
+              <ModelNode title="Grad-CAM" text="Gradient-based localization" />
+              <span>→</span>
+              <ModelNode title="Tumor mask" text="Localization comparison" />
             </div>
 
             <div className="documentation-grid four">
@@ -573,12 +699,13 @@ function Documentation() {
             </a>
           </section>
 
+          {/* 11 — PROJECT WORKFLOW */}
           <section
             id="workflow"
             className="documentation-section"
           >
             <SectionHeading
-              number="07"
+              number="10"
               title="Project Workflow"
               description="End-to-end development and deployment workflow."
             />
@@ -586,22 +713,23 @@ function Documentation() {
             <WorkflowSteps
               steps={[
                 ["01", "Dataset", "Kaggle MRI dataset"],
-                ["02", "Processing", "MAT/HDF5 parsing and normalization"],
+                ["02", "Preprocessing", "MAT/HDF5 parsing and normalization"],
                 ["03", "Splitting", "Patient-level partitions"],
                 ["04", "Training", "EfficientNet-B0 classification"],
                 ["05", "Evaluation", "Metrics and test-set analysis"],
-                ["06", "XAI", "Grad-CAM localization"],
+                ["06", "Explainability", "Grad-CAM localization"],
                 ["07", "Deployment", "FastAPI + Render + Vercel"],
               ]}
             />
           </section>
 
+          {/* 12 — LOCAL INSTALLATION */}
           <section
             id="installation"
             className="documentation-section"
           >
             <SectionHeading
-              number="08"
+              number="11"
               title="Local Installation"
               description="Run the complete NeuroVision AI project locally."
             />
@@ -646,32 +774,22 @@ npm run dev`}
                 API docs: http://127.0.0.1:8000/docs
               </span>
             </div>
-
-            <div className="documentation-callout">
-              <strong>Demo Samples</strong>
-              <span>
-                Six real MAT demo MRI files from the
-                repository's assets/demo/ folder are served
-                locally by the frontend at /demo/. The
-                "Try a demo sample" control on the homepage
-                loads one of these files directly and runs it
-                through the same upload-to-prediction pipeline
-                as a manually selected file.
-              </span>
-            </div>
           </section>
 
+          {/* 13 — API REFERENCE */}
           <section
             id="api"
             className="documentation-section"
           >
             <SectionHeading
-              number="09"
-              title="API"
+              number="12"
+              title="API Reference"
               description="FastAPI endpoints exposed by the NeuroVision AI backend."
             />
 
             <div className="api-list">
+              <ApiEndpoint method="GET" path="/" description="API status." />
+
               <ApiEndpoint
                 method="GET"
                 path="/health"
@@ -687,13 +805,13 @@ npm run dev`}
               <ApiEndpoint
                 method="POST"
                 path="/predict"
-                description="Upload a MAT MRI sample and receive class probabilities."
+                description="Upload a MAT/PNG/JPG/JPEG/WEBP MRI sample and receive class probabilities."
               />
 
               <ApiEndpoint
                 method="POST"
                 path="/explain"
-                description="Generate Grad-CAM explanation in the local workflow."
+                description="Generate a Grad-CAM explanation in the local workflow."
               />
 
               <ApiEndpoint
@@ -718,34 +836,36 @@ npm run dev`}
             </div>
           </section>
 
+          {/* 14 — DEPLOYMENT ARCHITECTURE */}
           <section
             id="deployment"
             className="documentation-section"
           >
             <SectionHeading
-              number="10"
-              title="Deployment"
+              number="13"
+              title="Deployment Architecture"
               description="The public application separates the frontend and inference backend."
             />
 
             <div className="deployment-flow">
-              <ModelNode
-                title="Vercel"
-                text="React / Vite frontend"
+              <ModelNode title="Vercel" text="React / Vite frontend" />
+              <span>→</span>
+              <ModelNode title="Render" text="FastAPI backend" />
+              <span>→</span>
+              <ModelNode title="EfficientNet-B0" text="CPU inference" />
+            </div>
+
+            <div className="documentation-grid two">
+              <InfoCard
+                title="CORS"
+                value="Enabled"
+                text="The backend allows the production Vercel origin plus local development origins (ports 5173 and 3000)."
               />
 
-              <span>→</span>
-
-              <ModelNode
-                title="Render"
-                text="FastAPI backend"
-              />
-
-              <span>→</span>
-
-              <ModelNode
-                title="EfficientNet-B0"
-                text="CPU inference"
+              <InfoCard
+                title="Hosting"
+                value="Separated"
+                text="Vercel serves the frontend; Render hosts the Python/PyTorch inference service."
               />
             </div>
 
@@ -764,12 +884,49 @@ npm run dev`}
             </div>
           </section>
 
+          {/* 15 — DEMO SAMPLES */}
+          <section
+            id="demo-samples"
+            className="documentation-section"
+          >
+            <SectionHeading
+              number="14"
+              title="Demo Samples"
+              description="Real MRI samples for trying NeuroVision AI without your own file."
+            />
+
+            <div className="documentation-card">
+              <h3>Repository demo samples</h3>
+
+              <p>
+                Six real MAT demo MRI files from the
+                repository&apos;s <code>assets/demo/</code> folder are
+                served by the frontend. The &quot;Try a demo
+                sample&quot; control on the homepage loads one of
+                these files directly and runs it through the same
+                upload-to-prediction pipeline as a manually
+                selected file.
+              </p>
+
+              <a
+                href="https://github.com/0mehedihasan/neurovision-ai/tree/main/assets/demo"
+                target="_blank"
+                rel="noreferrer"
+                className="documentation-link"
+              >
+                Browse demo samples
+                <ExternalLink size={15} />
+              </a>
+            </div>
+          </section>
+
+          {/* 16 — LIMITATIONS */}
           <section
             id="limitations"
             className="documentation-section"
           >
             <SectionHeading
-              number="11"
+              number="15"
               title="Limitations"
               description="Important considerations when interpreting the current system."
             />
@@ -779,7 +936,9 @@ npm run dev`}
                 <strong>Three-class scope</strong>
                 <span>
                   The classifier predicts Meningioma,
-                  Glioma, or Pituitary.
+                  Glioma, or Pituitary and should not be
+                  interpreted as a general brain tumor
+                  classifier.
                 </span>
               </div>
 
@@ -808,6 +967,23 @@ npm run dev`}
               </div>
 
               <div>
+                <strong>Model confidence</strong>
+                <span>
+                  Model confidence should not be interpreted
+                  as clinical certainty.
+                </span>
+              </div>
+
+              <div>
+                <strong>Grad-CAM scope</strong>
+                <span>
+                  Grad-CAM provides model-attribution
+                  visualization rather than a clinical
+                  segmentation result.
+                </span>
+              </div>
+
+              <div>
                 <strong>Research system</strong>
                 <span>
                   NeuroVision AI is intended as a research
@@ -817,17 +993,55 @@ npm run dev`}
               </div>
             </div>
           </section>
+
+          {/* 17 — PROJECT RESOURCES */}
+          <section
+            id="resources"
+            className="documentation-section"
+          >
+            <SectionHeading
+              number="16"
+              title="Project Resources"
+              description="Where to find the source, dataset, local release, and demo samples."
+            />
+
+            <div className="documentation-grid two">
+              <ResourceLink
+                title="Source Repository"
+                text="Explore the complete NeuroVision AI project source code."
+                url="https://github.com/0mehedihasan/neurovision-ai"
+                label="View on GitHub"
+              />
+
+              <ResourceLink
+                title="MRI Dataset"
+                text="View the Kaggle MRI dataset used by the project."
+                url="https://www.kaggle.com/datasets/sudipde25/mri-dataset-for-detection-and-analysis/data"
+                label="Open Kaggle Dataset"
+              />
+
+              <ResourceLink
+                title="V1 Local Release"
+                text="Access the NeuroVision AI V1 local release containing the research and explainability workflow."
+                url="https://github.com/0mehedihasan/neurovision-ai/releases/tag/V1"
+                label="View V1 Release"
+              />
+
+              <ResourceLink
+                title="Demo Samples"
+                text="Browse the MRI samples provided for testing NeuroVision AI."
+                url="https://github.com/0mehedihasan/neurovision-ai/tree/main/assets/demo"
+                label="Browse Samples"
+              />
+            </div>
+          </section>
         </main>
       </div>
     </div>
   );
 }
 
-function SectionHeading({
-  number,
-  title,
-  description,
-}) {
+function SectionHeading({ number, title, description }) {
   return (
     <div className="documentation-section-heading">
       <span>{number}</span>
@@ -908,11 +1122,7 @@ function InstallStep({ number, title, code }) {
   );
 }
 
-function ApiEndpoint({
-  method,
-  path,
-  description,
-}) {
+function ApiEndpoint({ method, path, description }) {
   return (
     <div className="api-endpoint">
       <span className={`api-method ${method.toLowerCase()}`}>
@@ -922,6 +1132,25 @@ function ApiEndpoint({
       <code>{path}</code>
 
       <p>{description}</p>
+    </div>
+  );
+}
+
+function ResourceLink({ title, text, url, label }) {
+  return (
+    <div className="documentation-info-card">
+      <strong>{title}</strong>
+      <p>{text}</p>
+
+      <a
+        href={url}
+        target="_blank"
+        rel="noreferrer"
+        className="documentation-link"
+      >
+        {label}
+        <ExternalLink size={14} />
+      </a>
     </div>
   );
 }

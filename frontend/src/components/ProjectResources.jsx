@@ -2,42 +2,42 @@ import {
   Database,
   ExternalLink,
   FlaskConical,
-  Github,
-  Linkedin,
+  FolderGit2,
+  PackageOpen,
 } from "lucide-react";
 
 const resources = [
   {
-    icon: Github,
-    title: "Source Code",
+    icon: FolderGit2,
+    title: "Source Repository",
     description:
-      "Explore the NeuroVision AI implementation, model pipeline, backend, and frontend.",
-    label: "GitHub Repository",
+      "Explore the complete NeuroVision AI project source code.",
+    label: "View on GitHub",
     url: "https://github.com/0mehedihasan/neurovision-ai",
   },
   {
     icon: Database,
     title: "MRI Dataset",
     description:
-      "Access the MRI dataset used for brain tumor detection and analysis.",
-    label: "Kaggle Dataset",
+      "View the Kaggle MRI dataset used by the project.",
+    label: "Open Kaggle Dataset",
     url: "https://www.kaggle.com/datasets/sudipde25/mri-dataset-for-detection-and-analysis/data",
+  },
+  {
+    icon: PackageOpen,
+    title: "V1 Local Release",
+    description:
+      "Access the NeuroVision AI V1 local release containing the research and explainability workflow.",
+    label: "View V1 Release",
+    url: "https://github.com/0mehedihasan/neurovision-ai/releases/tag/V1",
   },
   {
     icon: FlaskConical,
     title: "Demo Samples",
     description:
-      "Use the provided MRI samples to test NeuroVision AI.",
-    label: "Browse Demo Samples",
+      "Browse the MRI samples provided for testing NeuroVision AI.",
+    label: "Browse Samples",
     url: "https://github.com/0mehedihasan/neurovision-ai/tree/main/assets/demo",
-  },
-  {
-    icon: Linkedin,
-    title: "Developer",
-    description:
-      "Connect with Md. Mehedi Hasan and explore his research and professional work.",
-    label: "LinkedIn Profile",
-    url: "https://www.linkedin.com/in/0mehedihasan/",
   },
 ];
 
@@ -50,8 +50,8 @@ function ProjectResources() {
         <div>
           <h2>Explore the project</h2>
           <p>
-            Learn more about the implementation, dataset, and
-            research behind NeuroVision AI.
+            The source code, dataset, local release, and demo
+            samples behind NeuroVision AI.
           </p>
         </div>
       </div>
